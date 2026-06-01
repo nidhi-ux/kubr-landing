@@ -8,12 +8,8 @@
     body {
       margin: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      /* Private/stealth fintech style background */
-      background:
-        linear-gradient(rgba(2,6,23,0.82), rgba(2,6,23,0.94)),
-        url('https://images.unsplash.com/photo-1518546305927-5a555bb7020d?q=80&w=2070&auto=format&fit=crop');
-      background-size: cover;
-      background-position: center;
+      /* Changed to pure black */
+      background-color: #000000; 
       color: #ffffff;
       display: flex;
       align-items: center;
@@ -21,6 +17,7 @@
       height: 100vh;
       text-align: center;
       overflow: hidden;
+      position: relative;
     }
 
     /* subtle grid overlay for trading/quant feel */
@@ -28,10 +25,11 @@
       content: "";
       position: absolute;
       inset: 0;
-      background-image: linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
-                        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
       background-size: 40px 40px;
       pointer-events: none;
+      z-index: 0;
     }
 
     /* soft gradient glow accents */
@@ -40,30 +38,31 @@
       position: absolute;
       width: 600px;
       height: 600px;
-      background: radial-gradient(circle, rgba(247,147,26,0.15), transparent 70%);
+      background: radial-gradient(circle, rgba(247,147,26,0.12), transparent 70%);
       filter: blur(120px);
       top: 10%;
       left: 60%;
       pointer-events: none;
+      z-index: 0;
     }
 
     .container {
+      position: relative;
+      z-index: 1;
       max-width: 650px;
-      padding: 35px;
-      backdrop-filter: blur(16px);
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 40px;
+      backdrop-filter: blur(20px);
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 24px;
-      box-shadow: 0 0 80px rgba(0,0,0,0.8);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
     }
 
     .logo {
       font-size: 2.2rem;
       font-weight: bold;
       margin-bottom: 15px;
-      font-family: inherit;
-      resize: none;
-      letter-spacing: 3px;
+      letter-spacing: 4px;
       background: linear-gradient(90deg, #f7931a, #ffd700);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -71,38 +70,41 @@
 
     h1 {
       font-size: 3.2rem;
-      margin-bottom: 10px;
-      background: linear-gradient(90deg, #ffffff, #67e8f9);
+      margin-top: 0;
+      margin-bottom: 15px;
+      background: linear-gradient(90deg, #ffffff, #94a3b8);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
     p {
-      font-size: 1.1rem;
-      opacity: 0.85;
+      font-size: 1.05rem;
+      line-height: 1.6;
+      opacity: 0.8;
       margin-bottom: 20px;
     }
 
     .highlight {
-      color: #facc15;
+      color: #f7931a;
       font-weight: bold;
     }
 
     .cta-btn {
-      margin-top: 20px;
-      padding: 14px 22px;
+      margin-top: 10px;
+      padding: 16px 32px;
       border-radius: 12px;
       border: none;
       cursor: pointer;
       font-weight: bold;
+      font-size: 1rem;
       background: linear-gradient(90deg, #f7931a, #ffd700);
       color: #000;
-      transition: 0.3s;
+      transition: all 0.3s ease;
     }
 
     .cta-btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 5px 25px rgba(247,147,26,0.5);
+      box-shadow: 0 10px 30px rgba(247,147,26,0.4);
     }
 
     /* modal */
@@ -112,71 +114,81 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.75);
+      background: rgba(0,0,0,0.85);
       display: none;
       align-items: center;
       justify-content: center;
+      z-index: 100;
     }
 
     .modal-content {
-      background: #020617;
-      padding: 30px;
-      border-radius: 16px;
+      background: #0a0a0a;
+      padding: 40px;
+      border-radius: 24px;
       width: 90%;
-      max-width: 400px;
-      text-align: center;
-      border: 1px solid rgba(255,255,255,0.12);
-      box-shadow: 0 0 40px rgba(0,0,0,0.8);
+      max-width: 450px;
+      text-align: left;
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 0 50px rgba(0,0,0,1);
     }
 
-    input[type="email"],
-    input[type="text"],
-    input[type="tel"],
-    textarea {
+    .modal-content h2 {
+      margin-top: 0;
+      margin-bottom: 25px;
+      text-align: center;
+    }
+
+    input, textarea {
       padding: 12px;
       border-radius: 10px;
-      border: none;
+      border: 1px solid rgba(255,255,255,0.1);
       width: 100%;
-      margin-bottom: 15px;
-      background: rgba(255,255,255,0.08);
+      margin-bottom: 20px;
+      background: rgba(255,255,255,0.05);
       color: white;
+      box-sizing: border-box;
+      font-family: inherit;
     }
 
     label {
       display: block;
-      text-align: left;
       margin-bottom: 8px;
-      font-size: 0.9rem;
-      color: #cbd5e1;
-      font-weight: 500;
+      font-size: 0.85rem;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
 
     .btn {
       width: 100%;
-      padding: 12px;
+      padding: 14px;
       border-radius: 10px;
       border: none;
       font-weight: bold;
       background: linear-gradient(90deg, #f7931a, #ffd700);
       cursor: pointer;
+      font-size: 1rem;
     }
 
     .close {
-      margin-top: 10px;
-      font-size: 0.8rem;
-      color: #94a3b8;
+      margin-top: 20px;
+      font-size: 0.85rem;
+      color: #64748b;
       cursor: pointer;
+      text-align: center;
+      display: block;
+      text-decoration: underline;
     }
 
     .email {
-      margin-top: 20px;
+      margin-top: 30px;
       font-size: 0.9rem;
-      opacity: 0.8;
+      opacity: 0.6;
     }
-
   </style>
 </head>
 <body>
+
   <div class="container">
     <div class="logo">KUBR</div>
     <h1>Coming Soon</h1>
@@ -186,53 +198,38 @@
     </p>
 
     <p>
-      Today, private markets still run on fragmented data, PDFs, spreadsheets, manual diligence, and disconnected workflows. Investors spend weeks synthesizing information across tools that were never designed to work together.
-      KUBR brings diligence, verification, benchmarking, monitoring, and investment workflows into a single intelligence layer — helping investors move from fragmented information to structured conviction significantly faster.
-
+      Today, private markets still run on fragmented data and manual workflows. 
+      KUBR brings diligence, verification, and monitoring into a single intelligence layer 
+      to help investors move from information to conviction faster.
     </p>
 
     <p>
-      We’re opening early access selectively for investors, analysts, family offices, and institutions shaping the future of private capital markets.
+      We’re opening <span class="highlight">early access</span> selectively for family offices and institutions.
     </p>
 
-    <p>
-      Get <span class="highlight">early access</span> before everyone else.
-    </p>
-
-    <button class="cta-btn" onclick="openModal()">Get Early Access</button>
-
-    <p class="email">
-      For more details, reach out at
-      <span class="highlight">r2a@kubr.in</span>
-    </p>
+    <button class="cta-btn" onclick="openModal()">Request Early Access</button>
   </div>
 
   <!-- Modal -->
   <div class="modal" id="modal">
     <div class="modal-content">
-      <h2>Get Early Access</h2>
+      <h2>Early Access Request</h2>
       <form action="https://formspree.io/f/xrejozqw" method="POST">
         <label>Full Name</label>
-        <input type="text" name="name" placeholder="Enter your full name" required />
+        <input type="text" name="name" placeholder="John Doe" required />
 
-        <label>Organization / Company</label>
-        <input type="text" name="organization" placeholder="Enter your organization name" required />
-
-        <label>Designation</label>
-        <input type="text" name="designation" placeholder="Enter your designation" required />
+        <label>Organization</label>
+        <input type="text" name="organization" placeholder="Company Name" required />
 
         <label>Email Address</label>
-        <input type="email" name="email" placeholder="Enter your email address" required />
+        <input type="email" name="email" placeholder="name@company.com" required />
 
-        <label>Phone / WhatsApp Number</label>
-        <input type="tel" name="phone" placeholder="Enter your phone number" required />
+        <label>Reason for Interest</label>
+        <textarea name="purpose" placeholder="Tell us how you'd like to use Kubr" rows="3" required></textarea>
 
-        <label>Reason / Purpose of getting in touch</label>
-        <textarea name="purpose" placeholder="Tell us why you want early access" rows="4" required></textarea>
-
-        <button type="submit" class="btn">Get Early Access</button>
+        <button type="submit" class="btn">Submit Request</button>
       </form>
-      <div class="close" onclick="closeModal()">Close</div>
+      <span class="close" onclick="closeModal()">Back to site</span>
     </div>
   </div>
 
@@ -244,6 +241,14 @@
     function closeModal() {
       document.getElementById('modal').style.display = 'none';
     }
+
+    // Close modal if user clicks outside of the box
+    window.onclick = function(event) {
+      let modal = document.getElementById('modal');
+      if (event.target == modal) {
+        closeModal();
+      }
+    }
   </script>
-</body> 
+</body>
 </html>
