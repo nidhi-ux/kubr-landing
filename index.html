@@ -8,7 +8,6 @@
     body {
       margin: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      /* Changed to pure black */
       background-color: #000000; 
       color: #ffffff;
       display: flex;
@@ -89,17 +88,35 @@
       font-weight: bold;
     }
 
-    .cta-btn {
+    /* Button Grouping */
+    .btn-group {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
       margin-top: 10px;
+    }
+
+    .cta-btn {
       padding: 16px 32px;
       border-radius: 12px;
       border: none;
       cursor: pointer;
       font-weight: bold;
       font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    /* Primary Style */
+    .btn-primary {
       background: linear-gradient(90deg, #f7931a, #ffd700);
       color: #000;
-      transition: all 0.3s ease;
+    }
+
+    /* Contrast Style for Login */
+    .btn-outline {
+      background: transparent;
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.3);
     }
 
     .cta-btn:hover {
@@ -107,14 +124,20 @@
       box-shadow: 0 10px 30px rgba(247,147,26,0.4);
     }
 
-    /* modal */
+    .btn-outline:hover {
+        background: rgba(255,255,255,0.1);
+        border-color: #ffffff;
+        box-shadow: 0 10px 30px rgba(255,255,255,0.1);
+    }
+
+    /* modal / full screen overlay */
     .modal {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.85);
+      background: rgba(0,0,0,0.95);
       display: none;
       align-items: center;
       justify-content: center;
@@ -130,6 +153,18 @@
       text-align: left;
       border: 1px solid rgba(255,255,255,0.1);
       box-shadow: 0 0 50px rgba(0,0,0,1);
+    }
+
+    #error-message {
+      display: none;
+      background: rgba(239, 68, 68, 0.1);
+      color: #f87171;
+      padding: 12px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      text-align: center;
+      font-size: 0.9rem;
+      border: 1px solid rgba(239, 68, 68, 0.2);
     }
 
     .modal-content h2 {
@@ -179,12 +214,6 @@
       display: block;
       text-decoration: underline;
     }
-
-    .email {
-      margin-top: 30px;
-      font-size: 0.9rem;
-      opacity: 0.6;
-    }
   </style>
 </head>
 <body>
@@ -207,11 +236,14 @@
       We’re opening <span class="highlight">early access</span> selectively for family offices and institutions.
     </p>
 
-    <button class="cta-btn" onclick="openModal()">Request Early Access</button>
+    <div class="btn-group">
+        <button class="cta-btn btn-primary" onclick="openModal('requestModal')">Request Early Access</button>
+        <button class="cta-btn btn-outline" onclick="openModal('loginModal')">Login</button>
+    </div>
   </div>
 
-  <!-- Modal -->
-  <div class="modal" id="modal">
+  <!-- Request Modal -->
+  <div class="modal" id="requestModal">
     <div class="modal-content">
       <h2>Early Access Request</h2>
       <form action="https://formspree.io/f/xrejozqw" method="POST">
@@ -229,24 +261,59 @@
 
         <button type="submit" class="btn">Submit Request</button>
       </form>
-      <span class="close" onclick="closeModal()">Back to site</span>
+      <span class="close" onclick="closeModal('requestModal')">Back to site</span>
+    </div>
+  </div>
+
+  <!-- Login Modal -->
+  <div class="modal" id="loginModal">
+    <div class="modal-content">
+      <h2>Login</h2>
+      
+      <div id="error-message"></div>
+
+      <form id="loginForm">
+        <label>Email Address</label>
+        <input type="email" id="loginEmail" placeholder="name@company.com" required />
+
+        <label>Password</label>
+        <input type="password" id="loginPassword" placeholder="••••••••" required />
+
+        <button type="submit" class="btn">Sign In</button>
+      </form>
+      <span class="close" onclick="closeModal('loginModal')">Back to site</span>
     </div>
   </div>
 
   <script>
-    function openModal() {
-      document.getElementById('modal').style.display = 'flex';
+    // Encoded message: "You don't have access, request access."
+    const _0x4a21 = "WW91IGRvbid0IGhhdmUgYWNjZXNzLCByZXF1ZXN0IGFjY2Vzcy4=";
+
+    function openModal(id) {
+      document.getElementById(id).style.display = 'flex';
     }
 
-    function closeModal() {
-      document.getElementById('modal').style.display = 'none';
+    function closeModal(id) {
+      document.getElementById(id).style.display = 'none';
+      if(id === 'loginModal') {
+          document.getElementById('error-message').style.display = 'none';
+      }
     }
 
-    // Close modal if user clicks outside of the box
+    // Logic for the Login Form
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const errBox = document.getElementById('error-message');
+      
+      // Decodes the hidden message and displays it
+      errBox.textContent = atob(_0x4a21);
+      errBox.style.display = 'block';
+    });
+
     window.onclick = function(event) {
-      let modal = document.getElementById('modal');
-      if (event.target == modal) {
-        closeModal();
+      if (event.target.className === 'modal') {
+        event.target.style.display = 'none';
+        document.getElementById('error-message').style.display = 'none';
       }
     }
   </script>
